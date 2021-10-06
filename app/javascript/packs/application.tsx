@@ -27,7 +27,7 @@ function Application(): ReactElement {
     if(objectives.length === 0) {
       return (<div>No objectives yet :( </div>)
     }
-    return (<ul style={{listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '12px'}}>
+    return (<ul style={{listStyleType: 'none', paddingInlineStart: 0, display: 'flex', flexDirection: 'column', gap: '12px'}}>
       {
         objectives.map((objective, index) =>
           <li key={index}>
@@ -63,14 +63,15 @@ function Application(): ReactElement {
 
 
   return (
-    <div>
-      <h1>My Todo App</h1>
+    <div style={{display: "flex", justifyContent: "center"}}>
+    <div style={{minWidth: "80%"}}>
       <Button label={"+ Add obj."} onClick={addObjective} />
       {
         networkError ? <Error message={networkError} /> : null
       }
       {renderObjectives()}
     </div>
+   </div>
   );
 }
 
