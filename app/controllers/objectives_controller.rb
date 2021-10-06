@@ -3,9 +3,10 @@ class ObjectivesController < ApplicationController
   before_action :set_objective, only: [:update, :destroy]
 
   def index
+
     respond_to do |format|
       format.json do 
-        render json: Objective.all
+        render json: Objective.all, include: { key_results: {}}
       end
     end
   end

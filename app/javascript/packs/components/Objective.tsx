@@ -55,6 +55,11 @@ function Objective({objective, onChangeTitle, onDestroy} : ObjectiveProps ): Rea
       });
   }
 
+  function addKeyResult() {
+  }
+
+  console.log(objective)
+
   return (
     <div style={{border: "1px solid black", padding: "6px", display:"flex", flexDirection: "column", gap: "6px"}}>
       {networkError ? <Error message={networkError} /> : null}
@@ -65,7 +70,17 @@ function Objective({objective, onChangeTitle, onDestroy} : ObjectiveProps ): Rea
         }
         <Button label="edit" onClick={() => setIsEditing((oldState) => !oldState)}/>
       </div>
-      <div style={{display: "flex", justifyContent: "flex-end"}}>
+      <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+      {
+        objective.key_results.map(keyResult => (
+          isEditing ?
+          <input type="text" defaultValue={keyResult.title} onBlur={onBlur}/> :
+          <span>{keyResult.title}</span>
+        ))
+      }
+      </div>
+      <div style={{display: "flex", justifyContent: "space-between"}}>
+        <Button label="+ add KR" onClick={addKeyResult} />
         <Button label="destroy" onClick={destroy} />
       </div>
     </div>
