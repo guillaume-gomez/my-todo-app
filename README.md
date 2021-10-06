@@ -1,24 +1,21 @@
-# README
+# My Todo App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app **do** 
+ - CRUD objective
+ - CRUD key result
 
-Things you may want to cover:
+And **don't**
+ - validate weights
+ - modify weights on both key result and objective
 
-* Ruby version
+## TODO
+- units test API
+- add weight validation
+- rubycop and eslint
 
-* System dependencies
 
-* Configuration
+## Technologies used
+- rails
+- typescript
+- react > 16.8
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
