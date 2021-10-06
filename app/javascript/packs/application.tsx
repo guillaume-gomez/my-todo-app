@@ -31,7 +31,7 @@ function Application(): ReactElement {
       {
         objectives.map((objective, index) =>
           <li key={index}>
-            <Objective objective={objective} onChangeTitle={editObjective(index)} />
+            <Objective objective={objective} onDestroy={destroyObjective} onChangeTitle={editObjective(index)} />
           </li>
          )
       }
@@ -54,6 +54,11 @@ function Application(): ReactElement {
       })
       setObjectives(updatedObjectives);
     }
+  }
+
+  function destroyObjective(objectiveToDestroy) {
+    const updatedObjectives = objectives.filter(objective => objective.id !== objectiveToDestroy.id );
+    setObjectives(updatedObjectives);
   }
 
 

@@ -7,9 +7,10 @@ import Error from "./Error";
 interface ObjectiveProps {
   objective: ObjectiveInterface;
   onChangeTitle: (objective: ObjectiveInterface) => void;
+  onDestroy:(objective: ObjectiveInterface) => void;
 }
 
-function Objective({objective, onChangeTitle} : ObjectiveProps ): ReactElement {
+function Objective({objective, onChangeTitle, onDestroy} : ObjectiveProps ): ReactElement {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [networkError, setNetworkError] = useState<string|null>(null);
   
@@ -43,8 +44,19 @@ function Objective({objective, onChangeTitle} : ObjectiveProps ): ReactElement {
     }
   }
 
+  function destroy() {
+    onDestroy(objective);
+    axios.delete(`/objectives/${objective.id}.json?`)
+      .then((response) => {
+        setNetworkError(null)
+      })
+      .catch(({message}) => {
+        setNetworkError(message)
+      });
+  }
+
   return (
-    <div style={{border: "1px solid black", padding: "6px"}}>
+    <div style={{border: "1px solid black", padding: "6px", display:"flex", flexDirection: "column", gap: "6px"}}>
       {networkError ? <Error message={networkError} /> : null}
       <div style={{display: "flex", justifyContent:"space-between"}}>
         {isEditing ?
@@ -52,6 +64,9 @@ function Objective({objective, onChangeTitle} : ObjectiveProps ): ReactElement {
           <p>{objective.title}</p>
         }
         <Button label="edit" onClick={() => setIsEditing((oldState) => !oldState)}/>
+      </div>
+      <div style={{display: "flex", justifyContent: "flex-end"}}>
+        <Button label="destroy" onClick={destroy} />
       </div>
     </div>
   )
