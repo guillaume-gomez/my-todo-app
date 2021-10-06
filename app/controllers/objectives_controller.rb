@@ -39,11 +39,19 @@ class ObjectivesController < ApplicationController
 
 
   private
-    def objective_params
-      params.permit(:title)
-    end
 
-    def set_objective
-      @objective = Objective.find(params[:id])
-    end
+  def objective_params
+    params.permit(
+    :title,
+    key_results_attributes: [
+      :id,
+      :title,
+      :_destroy
+    ]
+  )
+  end
+
+  def set_objective
+    @objective = Objective.find(params[:id])
+  end
 end

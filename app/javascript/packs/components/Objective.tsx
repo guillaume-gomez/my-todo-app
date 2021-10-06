@@ -20,13 +20,16 @@ function Objective({objective, onChange, onDestroy} : ObjectiveProps ): ReactEle
     onChange(editedObjective);
     setIsEditing(false);
 
-    updateOnDatabase(editedObjective);
+    updateOnDatabase(
+      { id: editedObjective.id, title: editedObjective.title },
+      { key_results_attributes: editedObjective.key_results }
+    );
   }
 
-  function updateOnDatabase(objectiveToSend: ObjectiveInterface) {
+  function updateOnDatabase(objectiveToSend: {id: number|null, title: string|null}, keyResults: { key_results_attributes: KeyResultInterface } ) {
     if(!objectiveToSend.id) {
       // make a create API call
-      axios.post(`/objectives.json`, objectiveToSend)
+      axios.post(`/objectives.json`, {...objectiveToSend, ...keyResults })
       .then((response) => {
         setNetworkError(null)
       })
@@ -35,7 +38,7 @@ function Objective({objective, onChange, onDestroy} : ObjectiveProps ): ReactEle
       });
     } else {
       // make an edit API call
-      axios.patch(`/objectives/${objectiveToSend.id}.json?`, objectiveToSend)
+      axios.patch(`/objectives/${objectiveToSend.id}.json?`, {...objectiveToSend, ...keyResults })
       .then((response) => {
         setNetworkError(null)
       })
@@ -64,8 +67,13 @@ function Objective({objective, onChange, onDestroy} : ObjectiveProps ): ReactEle
         }
         return keyResult;
       });
-      onChange({...objective, key_results: editedKeyResults});
+      const editedObjective = {...objective, key_results: editedKeyResults};
+      onChange(editedObjective);
       setIsEditing(false);
+      updateOnDatabase(
+        { id: editedObjective.id, title: editedObjective.title },
+        { key_results_attributes: editedKeyResults }
+      );
     }
   }
 
@@ -73,6 +81,17 @@ function Objective({objective, onChange, onDestroy} : ObjectiveProps ): ReactEle
     return (event) => {
       const editedKeyResults = objective.key_results.filter((_keyResult, index) => index !== position);
       onChange({...objective, key_results: editedKeyResults});
+
+      const editedKeyResultsAttributes = objective.key_results.map((keyResult, index) => {
+        if(index === position) {
+          return {...keyResult, _destroy: true }
+        }
+        return keyResult;
+      });
+      updateOnDatabase(
+        { id: objective.id, title: objective.title },
+        { key_results_attributes: editedKeyResultsAttributes }
+      );
     }
   }
 
@@ -97,8 +116,8 @@ function Objective({objective, onChange, onDestroy} : ObjectiveProps ): ReactEle
       {
         objective.key_results.map((keyResult, index) => (
           isEditing ?
-          <div style={{ paddingLeft: "24px", display: "flex", justifyContent:"space-between", gap: "12px"}}>
-            <input style={{width: "100%"}} key={index} type="text" defaultValue={keyResult.title} onBlur={onBlurKeyResult(index)}/>
+          <div key={index} style={{ paddingLeft: "24px", display: "flex", justifyContent:"space-between", gap: "12px"}}>
+            <input style={{width: "100%"}} type="text" defaultValue={keyResult.title} onBlur={onBlurKeyResult(index)}/>
             <Button label="destroy KR" onClick={destroyKeyResult(index)}/>
           </div>
           :

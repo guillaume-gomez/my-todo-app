@@ -40,7 +40,7 @@ function Application(): ReactElement {
   }
 
   function addObjective() {
-    const newObjective = {id: undefined, title: null }
+    const newObjective = {id: undefined, title: null, key_results: [] }
     setObjectives([...objectives, newObjective]);
   }
 
