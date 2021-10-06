@@ -1,0 +1,3 @@
+interface ObjectivesInterface {
+  title: string;
+}
