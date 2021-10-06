@@ -4,16 +4,16 @@ import axios from 'axios';
 
 import Error from "./components/Error";
 
-import { Objectives } from "./interfaces";
+import { Objective } from "./interfaces";
 
 
 function Application(): ReactElement {
-  const [objectives, setObjectives] = useState<Objectives[]>([]);
+  const [objectives, setObjectives] = useState<Objective[]>([]);
   const [networkError, setNetworkError] = useState<string|null>(null);
   useEffect(() => {
     axios.get(`/objectives.json`)
       .then((response) => {
-        const { data } = response;
+        const { data } : Objective = response;
         setObjectives(data);
       })
       .catch(({message}) => {
@@ -27,6 +27,11 @@ function Application(): ReactElement {
       {
         networkError ? <Error message={networkError} /> : null
       }
+      <ul>
+      {
+        objectives.map(objective => <li>{objective.title}</li>)
+      }
+      </ul>
     </div>
   );
 }

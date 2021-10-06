@@ -1,3 +1,3 @@
-interface ObjectivesInterface {
+interface ObjectiveInterface {
   title: string;
 }
