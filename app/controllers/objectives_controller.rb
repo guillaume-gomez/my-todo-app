@@ -1,6 +1,6 @@
 class ObjectivesController < ApplicationController
   protect_from_forgery with: :null_session
-  before_action :set_objective, only: [:update]
+  before_action :set_objective, only: [:update, :destroy]
 
   def index
     respond_to do |format|
@@ -22,6 +22,14 @@ class ObjectivesController < ApplicationController
   def update
     @objective.assign_attributes(objective_params)
     if @objective.save
+      render json: @objective
+    else
+      render json: @objective.errors
+    end
+  end
+
+  def destroy
+    if @objective.destroy
       render json: @objective
     else
       render json: @objective.errors
