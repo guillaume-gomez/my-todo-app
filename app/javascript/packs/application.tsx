@@ -31,7 +31,7 @@ function Application(): ReactElement {
       {
         objectives.map((objective, index) =>
           <li key={index}>
-            <Objective objective={objective} onDestroy={destroyObjective} onChangeTitle={editObjective(index)} />
+            <Objective objective={objective} onDestroy={destroyObjective} onChange={editObjective(index)} />
           </li>
          )
       }
