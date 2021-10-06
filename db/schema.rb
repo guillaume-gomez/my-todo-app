@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_06_212528) do
+ActiveRecord::Schema.define(version: 2021_10_06_230253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(version: 2021_10_06_212528) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "weights", force: :cascade do |t|
+    t.integer "percentage"
+    t.string "weightable_type"
+    t.bigint "weightable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["weightable_type", "weightable_id"], name: "index_weights_on_weightable_type_and_weightable_id"
   end
 
 end
