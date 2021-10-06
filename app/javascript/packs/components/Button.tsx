@@ -6,7 +6,7 @@ interface ButtonProps {
 }
 
 function Button({label, onClick} : ButtonProps ): ReactElement {
-  return <button onClick={onClick}>+ {label}</button>
+  return <button onClick={onClick}>{label}</button>
 }
 
 export default Button;

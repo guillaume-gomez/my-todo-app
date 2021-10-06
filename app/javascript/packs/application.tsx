@@ -29,9 +29,9 @@ function Application(): ReactElement {
     }
     return (<ul style={{listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '12px'}}>
       {
-        objectives.map(objective =>
+        objectives.map((objective, index) =>
           <li key={objective.id}>
-            <Objective objective={objective} />
+            <Objective objective={objective} onChangeTitle={editObjective(index)} />
           </li>
          )
       }
@@ -39,15 +39,28 @@ function Application(): ReactElement {
     );
   }
 
-  function AddObjective() {
-    const newObjective = {id: -1, title: null }
+  function addObjective() {
+    const newObjective = {id: undefined, title: null }
     setObjectives([...objectives, newObjective]);
   }
+
+  function editObjective(position: number) {
+    return (modifiedObjective: ObjectiveInterface) => {
+      const updatedObjectives = objectives.map((objective, index) => {
+        if(index === position) {
+          return modifiedObjective;
+        }
+        return objective;
+      })
+      setObjectives(updatedObjectives);
+    }
+  }
+
 
   return (
     <div>
       <h1>My Todo App</h1>
-      <Button label={"Add obj."} onClick={AddObjective} />
+      <Button label={"+ Add obj."} onClick={addObjective} />
       {
         networkError ? <Error message={networkError} /> : null
       }
