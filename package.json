@@ -26,5 +26,8 @@
     "eslint-config-preact": "^1.1.4",
     "eslint-plugin-react": "^7.26.1",
     "webpack-dev-server": "^3"
+  },
+  "scripts": {
+    "lint": "eslint app/javascript/**/*.ts[x]"
   }
 }
