@@ -17,14 +17,6 @@ ActiveRecord::Schema.define(version: 2021_10_06_183242) do
 
   create_table "objectives", force: :cascade do |t|
     t.string "title"
-    t.bigint "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_objectives_on_project_id"
-  end
-
-  create_table "projects", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
