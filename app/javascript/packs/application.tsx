@@ -30,7 +30,7 @@ function Application(): ReactElement {
     return (<ul style={{listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '12px'}}>
       {
         objectives.map((objective, index) =>
-          <li key={objective.id}>
+          <li key={index}>
             <Objective objective={objective} onChangeTitle={editObjective(index)} />
           </li>
          )
