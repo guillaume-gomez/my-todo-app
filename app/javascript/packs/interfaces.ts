@@ -1,3 +1,4 @@
-interface ObjectiveInterface {
+export interface ObjectiveInterface {
+  id: number;
   title: string;
 }
