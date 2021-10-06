@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Error from "./components/Error";
 import Objective from "./components/Objective";
+import Button from "./components/Button";
 
 import { ObjectiveInterface } from "./interfaces";
 
@@ -38,9 +39,15 @@ function Application(): ReactElement {
     );
   }
 
+  function AddObjective() {
+    const newObjective = {id: -1, title: null }
+    setObjectives([...objectives, newObjective]);
+  }
+
   return (
     <div>
       <h1>My Todo App</h1>
+      <Button label={"Add obj."} onClick={AddObjective} />
       {
         networkError ? <Error message={networkError} /> : null
       }
