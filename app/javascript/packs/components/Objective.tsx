@@ -84,7 +84,7 @@ function Objective({objective, onChange, onDestroy} : ObjectiveProps ): ReactEle
   }
 
   return (
-    <div style={{border: "1px solid black", padding: "6px", display:"flex", flexDirection: "column", gap: "6px"}}>
+    <div style={{ backgroundColor: isEditing ? "#EEEEEE" : "white", border: "1px solid black", padding: "6px", display:"flex", flexDirection: "column", gap: "6px"}}>
       {networkError ? <Error message={networkError} /> : null}
       <div style={{display: "flex", justifyContent:"space-between", gap: "12px"}}>
         {isEditing ?
