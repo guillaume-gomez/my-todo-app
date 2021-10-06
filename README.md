@@ -12,7 +12,7 @@ And **don't**
 - units test API
 - add weight validation
 - rubycop and eslint
-- improve UI and UX(especially in edit mode)
+- improve UI and UX(especially when edit mode)
 
 
 ## Technologies used
