@@ -14,7 +14,7 @@ class ObjectivesController < ApplicationController
   def create
     @objective = Objective.new(objective_params)
     if @objective.save
-      render json: @objective
+      render json: @objective, include: { key_results: {}}
     else
       render json: @objective.errors
     end
@@ -23,7 +23,7 @@ class ObjectivesController < ApplicationController
   def update
     @objective.assign_attributes(objective_params)
     if @objective.save
-      render json: @objective
+      render json: @objective, include: { key_results: {}}
     else
       render json: @objective.errors
     end
