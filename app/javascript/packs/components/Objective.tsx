@@ -17,7 +17,6 @@ function Objective({objective, onChange, onDestroy} : ObjectiveProps ): ReactEle
 
   function onBlurTitle(event) {
     const editedObjective = { ...objective, title: event.target.value };
-    onChange(editedObjective);
     setIsEditing(false);
 
     updateOnDatabase(
@@ -30,7 +29,9 @@ function Objective({objective, onChange, onDestroy} : ObjectiveProps ): ReactEle
     if(!objectiveToSend.id) {
       // make a create API call
       axios.post(`/objectives.json`, {...objectiveToSend, ...keyResults })
-      .then((response) => {
+      .then(({data: { id, title, key_results }} : any) => {
+        const objectiveUpdated : ObjectiveInterface = { id, title, key_results };
+        onChange(objectiveUpdated);
         setNetworkError(null)
       })
       .catch(({message}) => {
@@ -39,7 +40,9 @@ function Objective({objective, onChange, onDestroy} : ObjectiveProps ): ReactEle
     } else {
       // make an edit API call
       axios.patch(`/objectives/${objectiveToSend.id}.json?`, {...objectiveToSend, ...keyResults })
-      .then((response) => {
+      .then(({data: { id, title, key_results }} : any) => {
+        const objectiveUpdated : ObjectiveInterface = { id, title, key_results };
+        onChange(objectiveUpdated);
         setNetworkError(null)
       })
       .catch(({message}) => {
